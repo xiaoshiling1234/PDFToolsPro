@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Converter - Free Online PDF to Word, Excel, PPT Tools</title>
+    <meta name="description" content="Convert PDF to Word, Excel, and PowerPoint instantly. Free, secure, no registration required.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .drop-zone {
+            transition: all 0.3s ease;
+        }
+        .drop-zone.dragover {
+            border-color: #6366F1;
+            background-color: #EEF2FF;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold text-gray-900">PDFTools<span class="text-indigo-600">Pro</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors">How It Works</a>
+                    <a href="#faq" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors">FAQ</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                        100% Free
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-indigo-50 text-indigo-700 font-medium text-sm mb-6">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                No registration required
+            </div>
+
+            <h1 id="mainTitle" class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Convert PDF to <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Word</span>
+            </h1>
+
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Transform your PDF documents into editable files in seconds.
+                Free, secure, and works on all devices.
+            </p>
+
+            <!-- Conversion Type Selector -->
+            <div class="mb-8">
+                <p class="text-sm font-medium text-gray-700 mb-3">Select conversion type:</p>
+                <div class="inline-flex rounded-lg bg-gray-100 p-1">
+                    <button onclick="selectConversionType('word')" id="btnWord" class="conversion-btn px-6 py-2 rounded-md text-sm font-medium transition-all bg-white text-indigo-600 shadow">
+                        PDF to Word
+                    </button>
+                    <button onclick="selectConversionType('excel')" id="btnExcel" class="conversion-btn px-6 py-2 rounded-md text-sm font-medium transition-all text-gray-600 hover:text-gray-900">
+                        PDF to Excel
+                    </button>
+                    <button onclick="selectConversionType('ppt')" id="btnPpt" class="conversion-btn px-6 py-2 rounded-md text-sm font-medium transition-all text-gray-600 hover:text-gray-900">
+                        PDF to PPT
+                    </button>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="max-w-2xl mx-auto">
+                <div id="dropZone" class="drop-zone glass-card rounded-2xl border-2 border-dashed border-gray-300 p-12 cursor-pointer hover:border-indigo-400">
+                    <input type="file" id="fileInput" accept=".pdf" class="hidden">
+
+                    <div id="uploadContent" class="text-center">
+                        <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                            Drop your PDF here
+                        </h3>
+                        <p class="text-gray-600 mb-6">or click to browse</p>
+                        <button id="selectBtn" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Select PDF File
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Maximum file size: 10MB</p>
+                    </div>
+
+                    <!-- Processing State (Hidden by default) -->
+                    <div id="processingState" class="text-center hidden">
+                        <div class="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Converting your PDF...</h3>
+                        <p class="text-gray-600">This usually takes a few seconds</p>
+                    </div>
+
+                    <!-- Success State (Hidden by default) -->
+                    <div id="successState" class="text-center hidden">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Conversion Complete!</h3>
+                        <p class="text-gray-600 mb-6">Your Word document is ready</p>
+
+                        <!-- CPA Locker -->
+                        <div id="cpaLocker" class="bg-indigo-50 rounded-xl p-6 mb-6">
+                            <h4 class="font-semibold text-gray-900 mb-3">Complete a quick action to download</h4>
+                            <p class="text-sm text-gray-600 mb-4">We need you to complete a quick action to unlock your download. This helps keep our tools free.</p>
+                            <div id="cpaContainer" class="min-h-[100px] flex items-center justify-center bg-white rounded-lg p-4">
+                                <p class="text-gray-500">Loading offers...</p>
+                            </div>
+                        </div>
+
+                        <button id="downloadBtn" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold hidden">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Download Word File
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose PDFToolsPro?</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Professional-grade PDF conversion tools that respect your privacy and save you time.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-gray-50 rounded-2xl p-8 cursor-pointer">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Lightning Fast</h3>
+                    <p class="text-gray-600">Convert files in seconds with our optimized conversion engine. No waiting, no delays.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-gray-50 rounded-2xl p-8 cursor-pointer">
+                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">100% Secure</h3>
+                    <p class="text-gray-600">All files are automatically deleted after 1 hour. Your data never leaves our secure servers.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-gray-50 rounded-2xl p-8 cursor-pointer">
+                    <div class="w-14 h-14 bg-violet-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Works Everywhere</h3>
+                    <p class="text-gray-600">Use on any device - desktop, tablet, or mobile. No software installation needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-xl text-gray-600">Three simple steps to convert your PDF</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-6">1</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Upload PDF</h3>
+                    <p class="text-gray-600">Drag and drop or click to select your PDF file from your device.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-6">2</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Convert</h3>
+                    <p class="text-gray-600">Our advanced engine converts your PDF to Word instantly.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-6">3</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Download</h3>
+                    <p class="text-gray-600">Get your converted Word file with one click.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-4">
+                <details class="group bg-gray-50 rounded-xl p-6 cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-gray-900">
+                        Is this really free?
+                        <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-gray-600">Yes! All our PDF conversion tools are 100% free with no hidden costs or limitations. No registration required.</p>
+                </details>
+
+                <details class="group bg-gray-50 rounded-xl p-6 cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-gray-900">
+                        Are my files safe?
+                        <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-gray-600">Absolutely. All files are automatically deleted from our servers within 1 hour. We use SSL encryption for all transfers.</p>
+                </details>
+
+                <details class="group bg-gray-50 rounded-xl p-6 cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-gray-900">
+                        Do I need to register?
+                        <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-gray-600">No registration required. Just upload, convert, and download your file. Quick and simple.</p>
+                </details>
+
+                <details class="group bg-gray-50 rounded-xl p-6 cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-gray-900">
+                        Can I use this on my phone?
+                        <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-gray-600">Yes! Our tools are fully responsive and work perfectly on smartphones, tablets, and desktop computers.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold">PDFToolsPro</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Free online PDF converter tools for everyone. Fast, secure, and easy to use.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Tools</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">PDF to Word</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">PDF to Excel</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">PDF to PPT</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:support@pdftoolspro.com" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 PDFToolsPro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            API_BASE_URL: '', // Same origin (production on Railway)
+            CPA_LOCKER_ID: 'YOUR_CPA_LOCKER_ID',
+            ENABLE_CPA: false
+        };
+
+        // Conversion types configuration
+        const CONVERSION_TYPES = {
+            word: {
+                name: 'Word',
+                endpoint: '/api/convert/pdf-to-word',
+                extension: '.docx',
+                title: 'Word',
+                btnId: 'btnWord'
+            },
+            excel: {
+                name: 'Excel',
+                endpoint: '/api/convert/pdf-to-excel',
+                extension: '.xlsx',
+                title: 'Excel',
+                btnId: 'btnExcel'
+            },
+            ppt: {
+                name: 'PPT',
+                endpoint: '/api/convert/pdf-to-ppt',
+                extension: '.pptx',
+                title: 'PowerPoint',
+                btnId: 'btnPpt'
+            }
+        };
+
+        // Current conversion type
+        let currentConversionType = 'word';
+
+        // DOM Elements
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const selectBtn = document.getElementById('selectBtn');
+        const uploadContent = document.getElementById('uploadContent');
+        const processingState = document.getElementById('processingState');
+        const successState = document.getElementById('successState');
+        const cpaContainer = document.getElementById('cpaContainer');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const mainTitle = document.getElementById('mainTitle');
+
+        let convertedFileUrl = null;
+        let convertedFileName = null;
+
+        /**
+         * Select conversion type
+         */
+        function selectConversionType(type) {
+            currentConversionType = type;
+            const config = CONVERSION_TYPES[type];
+
+            // Update button styles
+            document.querySelectorAll('.conversion-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-indigo-600', 'shadow');
+                btn.classList.add('text-gray-600');
+            });
+            document.getElementById(config.btnId).classList.add('bg-white', 'text-indigo-600', 'shadow');
+            document.getElementById(config.btnId).classList.remove('text-gray-600');
+
+            // Update title
+            mainTitle.innerHTML = `Convert PDF to <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">${config.title}</span>`;
+        }
+
+        // Click handlers
+        selectBtn.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('click', (e) => {
+            if (e.target === dropZone) fileInput.click();
+        });
+
+        // Drag and drop handlers
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) handleFile(files[0]);
+        });
+
+        // File selection handler
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        /**
+         * Handle PDF file upload and conversion
+         */
+        async function handleFile(file) {
+            // Validate file type
+            if (!file.name.endsWith('.pdf')) {
+                showError('Please select a PDF file');
+                return;
+            }
+
+            // Validate file size (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showError('File size must be less than 10MB');
+                return;
+            }
+
+            // Show processing state
+            uploadContent.classList.add('hidden');
+            processingState.classList.remove('hidden');
+
+            // Get conversion config
+            const conversionConfig = CONVERSION_TYPES[currentConversionType];
+
+            try {
+                // Create FormData
+                const formData = new FormData();
+                formData.append('file', file);
+
+                // Call conversion API with dynamic endpoint
+                const response = await fetch(`${CONFIG.API_BASE_URL}${conversionConfig.endpoint}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Conversion failed');
+                }
+
+                // Get file blob
+                const blob = await response.blob();
+                convertedFileUrl = URL.createObjectURL(blob);
+                convertedFileName = file.name.replace('.pdf', conversionConfig.extension);
+
+                // Hide processing, show success
+                processingState.classList.add('hidden');
+                successState.classList.remove('hidden');
+
+                if (CONFIG.ENABLE_CPA) {
+                    // Show CPA locker
+                    loadCPALocker();
+                } else {
+                    // Direct download (development mode)
+                    showDownloadButton();
+                }
+
+            } catch (error) {
+                console.error('Conversion error:', error);
+                processingState.classList.add('hidden');
+                uploadContent.classList.remove('hidden');
+                showError(`Conversion failed: ${error.message}`);
+            }
+        }
+
+        /**
+         * Load CPA Content Locker
+         */
+        function loadCPALocker() {
+            // CPAgrip Content Locker integration
+            // When user completes offer, the 'callback' function will be called
+
+            cpaContainer.innerHTML = `
+                <div class="text-center">
+                    <p class="text-gray-600 mb-4">Complete a quick action to unlock download</p>
+                    <p class="text-sm text-gray-500 mb-4">This helps keep our tools free for everyone.</p>
+                    <div id="cpa-locker-placeholder">
+                        <p class="text-indigo-600 font-medium mb-4">Loading offers...</p>
+                    </div>
+                </div>
+            `;
+
+            // Load CPAgrip script dynamically
+            const script = document.createElement('script');
+            script.src = `https://cpagrip.com/script_include.php?id=${CONFIG.CPA_LOCKER_ID}`;
+            script.onload = () => {
+                // CPAgrip loaded - it will inject content into cpa-locker-placeholder
+                console.log('CPAgrip locker loaded');
+            };
+            script.onerror = () => {
+                cpaContainer.innerHTML = `
+                    <div class="text-center text-red-600">
+                        <p>Failed to load offers. Please try again later.</p>
+                    </div>
+                `;
+            };
+            document.head.appendChild(script);
+
+            // Global callback for CPA completion
+            window.postClickLock = function() {
+                console.log('CPA action completed!');
+                cpaContainer.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <p class="text-green-600 font-semibold">Action Completed!</p>
+                        <p class="text-sm text-gray-600 mt-2">Your download is ready</p>
+                    </div>
+                `;
+                showDownloadButton();
+            };
+        }
+
+        /**
+         * Show download button
+         */
+        function showDownloadButton() {
+            downloadBtn.classList.remove('hidden');
+        }
+
+        /**
+         * Download converted file
+         */
+        downloadBtn.addEventListener('click', () => {
+            if (!convertedFileUrl || !convertedFileName) {
+                showError('No file to download');
+                return;
+            }
+
+            // Create download link
+            const a = document.createElement('a');
+            a.href = convertedFileUrl;
+            a.download = convertedFileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+        /**
+         * Show error message
+         */
+        function showError(message) {
+            alert(message);
+            // Reset to upload state
+            uploadContent.classList.remove('hidden');
+            processingState.classList.add('hidden');
+            successState.classList.add('hidden');
+        }
+
+        // Reset for new upload
+        function resetUpload() {
+            uploadContent.classList.remove('hidden');
+            processingState.classList.add('hidden');
+            successState.classList.add('hidden');
+            downloadBtn.classList.add('hidden');
+            fileInput.value = '';
+            convertedFileUrl = null;
+            convertedFileName = null;
+        }
+    </script>
+</body>
+</html>

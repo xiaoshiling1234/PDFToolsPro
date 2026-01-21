@@ -33,15 +33,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Frontend path
-frontend_path = Path(__file__).parent.parent.parent / "frontend"
+# Static files path (for Railway all-in-one deployment)
+static_path = Path(__file__).parent.parent / "static"
 index_html = None
-if frontend_path.exists():
-    index_path = frontend_path / "index.html"
+if static_path.exists():
+    index_path = static_path / "index.html"
     if index_path.exists():
         with open(index_path, "r", encoding="utf-8") as f:
             index_html = f.read()
-        logger.info(f"Loaded frontend from: {frontend_path}")
+        logger.info(f"Loaded frontend from: {static_path}")
+
+# Also check for frontend folder (for local development)
+if not index_html:
+    frontend_path = Path(__file__).parent.parent.parent / "frontend"
+    if frontend_path.exists():
+        index_path = frontend_path / "index.html"
+        if index_path.exists():
+            with open(index_path, "r", encoding="utf-8") as f:
+                index_html = f.read()
+            logger.info(f"Loaded frontend from: {frontend_path}")
+
+# Use whichever path has the index.html
+base_path = static_path if static_path.exists() and (static_path / "index.html").exists() else Path(__file__).parent.parent.parent / "frontend"
 
 # Include API routers FIRST
 app.include_router(convert.router)
@@ -85,7 +98,7 @@ async def serve_frontend(path: str):
     """Serve frontend SPA - return index.html for all non-API routes"""
     # Check if it's requesting a static asset
     if path and "." in path:
-        asset_path = frontend_path / path
+        asset_path = base_path / path
         if asset_path.exists() and asset_path.is_file():
             with open(asset_path, "rb") as f:
                 content = f.read()
