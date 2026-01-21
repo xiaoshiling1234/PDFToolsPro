@@ -1,0 +1,227 @@
+# PDF Converter Tool - 在线文件转换工具
+
+## 项目概述
+
+这是一个现代化的在线PDF转换工具，支持PDF与Word/Excel/PPT之间的转换。项目采用前后端分离架构，后端使用FastAPI，前端使用HTML + TailwindCSS。
+
+### 核心功能
+- **PDF 转 Word** - 保持格式、提取图片、支持多页文档
+- **拖拽上传** - 现代化的文件上传体验
+- **实时进度** - 上传、处理、下载状态展示
+- **CPA变现** - 集成Content Locker实现下载锁定
+
+## 技术栈
+
+### 后端
+- **FastAPI 0.128** - 现代化的 Python Web 框架
+- **pdf2docx 0.5.8** - PDF 转 Word 核心库
+- **python-docx** - Word 文档处理
+- **python-multipart** - 文件上传支持
+
+### 前端
+- **HTML5** - 单页应用
+- **TailwindCSS 3.4** - 现代化UI框架
+- **原生JavaScript** - 无需构建工具
+
+### 部署
+- **Railway** - 后端API托管
+- **Vercel** - 前端静态文件托管
+
+## 项目结构
+
+```
+alliance/
+├── backend/                 # 后端服务 (FastAPI)
+│   ├── app/
+│   │   ├── main.py         # 应用入口
+│   │   ├── api/            # API路由
+│   │   │   └── convert.py  # PDF转换接口
+│   │   └── core/           # 核心逻辑
+│   │       └── pdf_converter.py
+│   └── requirements.txt    # Python依赖
+│
+├── frontend/               # 前端 (HTML + Tailwind)
+│   └── index.html         # 单页应用
+│
+├── landing-page/          # CPA账户审批用着陆页
+│   ├── index.html
+│   ├── privacy.html
+│   └── terms.html
+│
+├── docs/                  # 项目文档
+│   ├── deployment-guide.md          # 部署指南
+│   ├── cpagrip-registration-guide.md
+│   ├── keyword-research-guide.md
+│   └── domain-purchase-guide.md
+│
+├── railway.toml           # Railway配置
+├── vercel.json            # Vercel配置
+└── .gitignore             # Git忽略文件
+```
+
+## 快速开始
+
+### 本地开发
+
+```bash
+# 1. 进入后端目录
+cd backend
+
+# 2. 安装依赖
+pip install -r requirements.txt
+
+# 3. 启动服务器
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+访问：
+- 前端页面: http://localhost:8000
+- API文档: http://localhost:8000/docs
+
+### 部署到生产环境
+
+详细步骤请参考 [部署指南](docs/deployment-guide.md)
+
+**快速部署步骤：**
+
+1. **推送到GitHub**
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/your-username/pdf-converter-tool.git
+git push -u origin main
+```
+
+2. **部署后端到Railway**
+- 访问 https://railway.app/
+- 使用GitHub登录
+- 选择仓库并部署
+- 设置Root Directory为 `backend`
+
+3. **部署前端到Vercel**
+- 访问 https://vercel.com/
+- 导入GitHub仓库
+- 设置Root Directory为 `frontend`
+- 部署
+
+## API 端点
+
+### POST /api/convert/pdf-to-word
+转换PDF为Word文档
+
+**请求：**
+- Content-Type: multipart/form-data
+- Body: file (PDF文件, 最大10MB)
+
+**响应：**
+- Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+- Body: Word文档二进制
+
+### GET /api/convert/pdf-to-word
+获取转换端点信息
+
+### POST /api/convert/validate-pdf
+验证PDF文件（不转换）
+
+## 配置
+
+### 环境变量（可选）
+
+```env
+# Railway环境变量
+PORT=8000
+PYTHON_VERSION=3.10
+
+# CORS配置（生产环境）
+ALLOWED_ORIGINS=https://yourdomain.com
+```
+
+### 前端配置
+
+编辑 `frontend/index.html` 中的 `CONFIG`：
+
+```javascript
+const CONFIG = {
+    // API地址（自动检测环境）
+    API_BASE_URL: window.location.hostname === 'localhost'
+        ? 'http://localhost:8000'  // 开发环境
+        : '',                      // 生产环境使用相对路径
+
+    // CPA配置
+    CPA_LOCKER_ID: 'your_locker_id',
+    ENABLE_CPA: false  // 设为true启用CPA锁定
+};
+```
+
+## 功能特性
+
+### ✅ 已实现
+- [x] PDF 转 Word 核心转换功能
+- [x] 文件上传和验证
+- [x] 拖拽上传UI
+- [x] 实时进度状态
+- [x] 错误处理和日志
+- [x] API文档自动生成
+- [x] CPA Content Locker集成框架
+- [x] 部署配置文件
+
+### 📋 后续扩展
+- [ ] PDF 转 Excel
+- [ ] PDF 转 PPT
+- [ ] 批量转换
+- [ ] OCR文字识别
+- [ ] 文件压缩
+
+## 成本估算
+
+### 免费额度（初期）
+
+| 平台 | 免费额度 | 月费用 |
+|------|----------|--------|
+| Railway | $5/月 | $0 |
+| Vercel | 无限 | $0 |
+| GitHub | 私有仓库 | $0 |
+| **总计** | - | **$0** |
+
+### 扩展后（如需）
+
+- Railway付费计划: $5/月起
+- Vercel Pro: $20/月（可选）
+
+## 变现策略
+
+### CPA Content Locker
+1. 注册CPAgrip账户
+2. 创建Content Locker
+3. 获取Locker ID
+4. 在前端配置 `ENABLE_CPA: true`
+
+详细指南参考 [CPAgrip注册指南](docs/cpagrip-registration-guide.md)
+
+## 常见问题
+
+### Q: 转换失败怎么办？
+A: 检查Railway日志，常见原因：
+- PDF文件损坏
+- 文件加密（需要密码）
+- 文件过大（限制10MB）
+
+### Q: CORS错误
+A: 在Railway环境变量中添加：
+```
+ALLOWED_ORIGINS=https://your-vercel-url.vercel.app
+```
+
+### Q: 如何增加文件大小限制？
+A: 修改后端 `convert.py` 中的验证逻辑和前端配置
+
+## 许可证
+
+MIT License
+
+---
+
+**当前状态**: 可部署
+**最后更新**: 2026-01-21
+# PDFToolsPro

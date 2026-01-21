@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(superpowers:using-superpowers)",
+      "Skill(superpowers:brainstorming)",
+      "Bash(dir:*)",
+      "Bash(mkdir:*)",
+      "Bash(python:*)",
+      "Skill(skill-creator)",
+      "Bash(pip install:*)"
+    ]
+  }
+}
