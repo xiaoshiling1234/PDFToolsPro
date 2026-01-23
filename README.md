@@ -27,7 +27,8 @@
 - **原生JavaScript** - 无需构建工具
 
 ### 部署
-- **Railway** - 一体化部署（推荐）
+- **Zeabur** - 免费部署，不需要信用卡（推荐）
+- **Railway** - 需要信用卡验证
 - 单平台部署，无需配置CORS
 
 ## 项目结构
@@ -56,7 +57,8 @@ alliance/
 │   ├── keyword-research-guide.md
 │   └── domain-purchase-guide.md
 │
-└── railway.toml           # Railway配置
+├── railway.toml           # Railway配置 (需要信用卡)
+└── zeabur.yaml            # Zeabur配置 (免费，不需要信用卡)
 ```
 
 ## 快速开始
@@ -82,7 +84,26 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 详细步骤请参考 [部署指南](docs/deployment-guide.md)
 
-**快速部署（只需Railway）：**
+#### 方案一：Zeabur（推荐，免费，不需要信用卡）
+
+1. **推送到GitHub**
+```bash
+git add .
+git commit -m "Ready for deployment"
+git push
+```
+
+2. **部署到Zeabur**
+- 访问 https://zeabur.com
+- 使用GitHub登录
+- 点击 "New Project" → "Deploy from GitHub"
+- 选择你的仓库
+- Zeabur 会自动识别 `zeabur.yaml` 配置
+- 点击 Deploy
+
+完成！Zeabur会自动部署并分配URL（如：https://your-app.zeabur.app）
+
+#### 方案二：Railway（需要信用卡）
 
 1. **推送到GitHub**
 ```bash
@@ -191,14 +212,16 @@ PORT=8000
 
 ### 免费额度
 
-| 平台 | 免费额度 | 月费用 |
-|------|----------|--------|
-| Railway | $5/月 | $0 |
-| GitHub | 私有仓库 | $0 |
-| **总计** | - | **$0** |
+| 平台 | 免费额度 | 是否需要卡 | 月费用 |
+|------|----------|-----------|--------|
+| Zeabur | $5/月 | 不需要 | $0 |
+| Railway | $5/月 | 需要 | $0 |
+| GitHub | 私有仓库 | 不需要 | $0 |
+| **总计** | - | - | **$0** |
 
 ### 付费计划（如需扩展）
 
+- Zeabur: 从 $5/月起
 - Railway: $5/月起（超出免费额度后）
 
 ## 变现策略

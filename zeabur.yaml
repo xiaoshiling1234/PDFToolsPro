@@ -1,0 +1,18 @@
+# Zeabur 部署配置 - PDFToolsPro
+# 文档: https://zeabur.com/docs
+
+services:
+  # 后端服务 (FastAPI)
+  - type: worker
+    name: pdftoolspro-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    env:
+      - PORT=8000
+    healthCheckPath: /health
+    # 设置工作目录为 backend
+    workingDirectory: backend
+    # 资源配置 (免费层)
+    resources:
+      memory: 512Mi
