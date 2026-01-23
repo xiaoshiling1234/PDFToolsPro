@@ -3,14 +3,16 @@
 
 services:
   # 后端服务 (FastAPI)
-  - type: worker
+  - type: web
     name: pdftoolspro-backend
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
-    env:
-      - PORT=8000
-    healthCheckPath: /health
+    envVars:
+      - name: PORT
+        value: "8080"
+    healthCheck:
+      httpPath: /health
     # 设置工作目录为 backend
     workingDirectory: backend
     # 资源配置 (免费层)
