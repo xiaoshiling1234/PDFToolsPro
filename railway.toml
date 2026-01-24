@@ -3,6 +3,8 @@ builder = "nixpacks"
 
 [build.env]
 PYTHON_VERSION = "3.10"
+# 安装X11相关库作为备用方案（主要靠opencv-python-headless解决）
+APT_PACKAGES = "libxcb-xinerama0 libxcb-cursor0 libxcb1-dev libxext6 libx11-6"
 
 [deploy]
 startCommand = "uvicorn app.main:app --host 0.0.0.0 --port $PORT"

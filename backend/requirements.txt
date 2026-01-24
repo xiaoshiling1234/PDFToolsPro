@@ -1,3 +1,8 @@
+# 强制所有依赖使用headless版本，避免X11库依赖(libxcb.so.1)
+opencv-python-headless==4.13.0.90
+# 排除带GUI的opencv-python，防止依赖冲突
+opencv-python==
+
 fastapi==0.128.0
 uvicorn[standard]==0.40.0
 python-multipart==0.0.21
@@ -17,7 +22,6 @@ pandas==2.2.3
 
 # 图片处理
 Pillow==12.1.0
-opencv-python-headless==4.13.0.90
 
 # 其他依赖
 python-dotenv==1.2.1
